@@ -80,3 +80,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: target/site/allure-maven-plugin
+          force_orphan: true  # Always deploy from scratch
+          keep_files: false   # Don't keep existing files
