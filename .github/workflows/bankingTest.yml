@@ -24,7 +24,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Cache Maven packages
-        uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v3.3.0
+        uses: actions/cache@3624ceb22c1c5a30134639c6f3ec1ca1e70b75d8 # v4.0.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -45,14 +45,14 @@ jobs:
 
       - name: Upload Test Logs
         if: always()
-        uses: actions/upload-artifact@5076952e7b4c4e7e4f8857290f3d2f1e5475b7f4 # v4.3.0
+        uses: actions/upload-artifact@0b2256babc2b7ac1393a2a3b02e3675b3e0f6715 # v4.4.0
         with:
           name: test-logs
           path: target/surefire-reports
 
       - name: Upload Screenshots
         if: failure()
-        uses: actions/upload-artifact@5076952e7b4c4e7e4f8857290f3d2f1e5475b7f4 # v4.3.0
+        uses: actions/upload-artifact@0b2256babc2b7ac1393a2a3b02e3675b3e0f6715 # v4.4.0
         with:
           name: test-screenshots
           path: target/screenshots
@@ -66,13 +66,13 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.0
 
       - name: Upload Allure Report
-        uses: actions/upload-artifact@5076952e7b4c4e7e4f8857290f3d2f1e5475b7f4 # v4.3.0
+        uses: actions/upload-artifact@0b2256babc2b7ac1393a2a3b02e3675b3e0f6715 # v4.4.0
         with:
           name: allure-report
           path: target/site/allure-maven-plugin
 
       - name: Upload Cucumber Report
-        uses: actions/upload-artifact@5076952e7b4c4e7e4f8857290f3d2f1e5475b7f4 # v4.3.0
+        uses: actions/upload-artifact@0b2256babc2b7ac1393a2a3b02e3675b3e0f6715 # v4.4.0
         with:
           name: cucumber-report
           path: target/cucumber-reports
