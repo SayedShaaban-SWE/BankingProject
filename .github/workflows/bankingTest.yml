@@ -32,28 +32,38 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2-
             
-      - name: Build and Test with Allure
+      - name: Build and Test
         env:
           TEST_ENV: ${{ secrets.TEST_ENV }}
           API_KEY: ${{ secrets.API_KEY }}
         run: |
           mvn clean test -Dtest.env=$TEST_ENV -Dapi.key=$API_KEY \
           -Dallure.results.directory=target/allure-results \
-          -Dcucumber.plugin="io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm, html:target/cucumber-reports.html"
+          -Dcucumber.plugin="io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm, html:target/cucumber-reports.html, json:target/cucumber-reports/cucumber.json"
           
       - name: Generate Allure Report
         run: |
           mvn allure:report -Dallure.results.directory=target/allure-results
           
-      - name: Upload Test Logs
-        if: always()
+      - name: Upload Test Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: test-logs
+          name: test-artifacts
           path: |
             target/surefire-reports
             target/allure-results
-            
+            target/cucumber-reports
+            target/cucumber-reports.html
+          if-no-files-found: error
+          
+      - name: Upload Cucumber HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-html-report
+          path: target/cucumber-reports.html
+          retention-days: 7
+          if-no-files-found: error  # Fail if report is missing
+          
       - name: Upload Screenshots
         if: failure()
         uses: actions/upload-artifact@v4
@@ -69,11 +79,11 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v4
         
-      - name: Download Allure Report Artifact
+      - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: test-logs
-          path: target/allure-results
+          name: test-artifacts
+          path: target/
           
       - name: Generate Allure Report
         run: |
@@ -85,4 +95,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: target/site/allure-maven-plugin
           force_orphan: true
-          keep_files: false
