@@ -32,24 +32,27 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2-
 
-      - name: Build and Test
+      - name: Build and Test with Allure
         env:
           TEST_ENV: ${{ secrets.TEST_ENV }}
           API_KEY: ${{ secrets.API_KEY }}
-        run: mvn clean test -Dtest.env=$TEST_ENV -Dapi.key=$API_KEY -Dallure.results.directory=target/allure-results
-
-      - name: Generate Cucumber HTML Report
-        run: mvn io.qameta.allure:cucumber7-jvm:report
+        run: |
+          mvn clean test -Dtest.env=$TEST_ENV -Dapi.key=$API_KEY \
+          -Dallure.results.directory=target/allure-results \
+          -Dcucumber.plugin="io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm, html:target/cucumber-reports.html"
 
       - name: Generate Allure Report
-        run: mvn io.qameta.allure:allure-maven:report -Dallure.results.directory=target/allure-results
+        run: |
+          mvn allure:report -Dallure.results.directory=target/allure-results
 
       - name: Upload Test Logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-logs
-          path: target/surefire-reports
+          path: |
+            target/surefire-reports
+            target/allure-results
 
       - name: Upload Screenshots
         if: failure()
@@ -71,12 +74,6 @@ jobs:
         with:
           name: allure-report
           path: target/site/allure-maven-plugin
-
-      - name: Upload Cucumber Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: cucumber-report
-          path: target/cucumber-reports
 
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
