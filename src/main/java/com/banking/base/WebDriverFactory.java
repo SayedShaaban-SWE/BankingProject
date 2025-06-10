@@ -24,8 +24,10 @@ public class WebDriverFactory {
             case "chrome":
                 WebDriverManager.chromedriver().clearDriverCache().setup(); // Clear old versions
                 ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--headless=new");
+                chromeOptions.addArguments("--disable-gpu");
                 chromeOptions.addArguments("--start-maximized");
-                chromeOptions.addArguments("--remote-allow-origins=*"); // Fix for Chrome 111+
+                chromeOptions.addArguments("--remote-allow-origins=*");
                 logger.debug("Initialized ChromeDriver");
                 return new ChromeDriver(chromeOptions);
 
