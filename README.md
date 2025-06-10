@@ -109,13 +109,13 @@
 
 ## 📄 Sample Reports
 * **Allure Report**
-https://github.com/user-attachments/assets/ae6aeb1d-ae06-42c5-b76b-5d72ed3a17db
+![Screenshot 2025-06-10 182524](https://github.com/user-attachments/assets/714d5619-1a6d-4970-ae8d-dd373de85192)
 
 * **Cucumber Report**
-https://github.com/user-attachments/assets/881a00e8-5e43-47e6-add5-1030a726137a
+![Screenshot 2025-06-10 182613](https://github.com/user-attachments/assets/6ad7c4a4-83c7-4b58-b620-face42c24edd)
 
 * **testNG Report**
-  https://github.com/user-attachments/assets/881a00e8-5e43-47e6-add5-1030a726137a
+  ![Screenshot 2025-06-10 182832](https://github.com/user-attachments/assets/2ce00937-06ef-4bc7-9810-d52aeecb1d79)
 
 ## 🗃️ Documentation
 
