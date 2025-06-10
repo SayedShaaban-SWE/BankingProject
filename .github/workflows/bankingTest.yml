@@ -75,10 +75,9 @@ jobs:
           name: allure-report
           path: target/site/allure-maven-plugin
 
-      - name: Deploy Allure Report to GitHub Pages
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: target/site/allure-maven-plugin
-          force_orphan: true  # Always deploy from scratch
-          keep_files: false   # Don't keep existing files
+          force_orphan: true
